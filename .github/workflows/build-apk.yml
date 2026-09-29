@@ -24,9 +24,17 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build Debug APK
-        run: chmod +x ./gradlew && ./gradlew assembleDebug
+      - name: Check project structure
+        run: |
+          echo "=== ROOT DIRECTORY ==="
+          ls -la
+          echo "=== GRADLE FILES ==="
+          find . -maxdepth 3 -type f \( -name "gradlew" -o -name "build.gradle" -o -name "build.gradle.kts" -o -name "settings.gradle" -o -name "settings.gradle.kts" \) -print
 
+      - name: Build Debug APK
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assembleDebug
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
